@@ -1,0 +1,109 @@
+#set($payUser=$session.getAttribute("payUser"))
+#set($saleUser=$session.getAttribute("saleUser"))
+#set($categoryList = $session.getAttribute("categoryList"))
+<!-- HEADER -->
+<header>
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-left">
+                #if(!$saleUser)
+                    <li><a href="/sale_user_login.html"><i class="fa fa-user-o"></i>我是卖家</a></li>
+                #else
+                    <li><a href="/sale_user_home.html"><i class="fa fa-user-o"></i>我是卖家</a></li>
+                #end
+
+                #if(!$payUser)
+                    <li><a href="#"><i class="fa fa-phone"></i> 无</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> 无</a></li>
+                #else
+                    <li><a href="#"><i class="fa fa-phone"></i> $!{payUser.phone}</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> $!{payUser.phone}@163.com</a></li>
+                #end
+            </ul>
+            <ul class="header-links pull-right">
+                #if(!$payUser)
+                    <li><a href="/register/userRegister.html"><i class="fa fa-dollar"></i> 免费注册</a></li>
+                    <li><a href="/login/userLogin.html"><i class="fa fa-user-o"></i> 请登录</a></li>
+                #else
+                    <li><a href="/pay_user_home.html"><i class="fa fa-dollar"></i> 我的竞拍</a></li>
+                    <li><a href="#"><i class="fa fa-user-o"></i> $!{payUser.userName}</a></li>
+                    <li><a href="/login/userQuit.html"><i class="fa fa-user-o"></i> 退出</a></li>
+                #end
+            </ul>
+        </div>
+    </div>
+    <!-- /TOP HEADER -->
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/index.html" class="logo">
+                            <img src="../assets/image/sczs_logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- SEARCH BAR -->
+                <div class="col-md-6">
+                    <div class="header-search">
+                        <form>
+                            <select id="selectCategoryName" class="input-select" >
+                                <option value="0">所有分类</option>
+                                #if($categoryList)
+                                    #foreach($category in $categoryList)
+                                        <option value="$!{category.categoryName}">$!{category.categoryName}</option>
+                                    #end
+                                #end
+                            </select>
+                            <input id="partProductName"  class="input" placeholder="在这里输入">
+                            <button class="search-btn" onclick="searchProduct()">搜索</button>
+                        </form>
+                        <form id="searchProductForm" action="/searchProduct.html" method="post">
+                            <input id="realCategoryName" name="selectCategoryName" type="hidden">
+                            <input id="realPartProductName" name="partProductName" type="hidden">
+                        </form>
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                            <!-- Wishlist -->
+                        #*<div>
+                            <a href="#">
+                                <i class="fa fa-heart-o"></i>
+                                <span>我的收藏</span>
+                                <div class="qty">2</div>
+                            </a>
+                        </div>*#
+                        <!-- /Wishlist -->
+
+
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>
+<!-- /HEADER -->

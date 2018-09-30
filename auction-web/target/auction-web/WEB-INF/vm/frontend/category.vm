@@ -1,0 +1,98 @@
+#*分类页*#
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="/index.html">首  页</a></li>
+                    <li class="active">  $!{categoryName}  </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+
+            <!-- STORE -->
+            <div id="store" class="col-md-12">
+
+                <!-- store products -->
+                <div class="row">
+                    #foreach($auctionInfo in $auctionInfoList)
+
+                    <!-- product -->
+                    <div class="col-md-4 col-xs-6">
+                        <div class="product">
+                            <div class="product-img">
+                                <img src="$!{auctionInfo.url}" alt="">
+                                <div class="product-label">
+                                    #if($!auctionInfo.status == "未开始")
+                                        <span class="sale">倒计时</span>
+                                        <span class="new">即将开始</span>
+                                        #else
+                                        <span class="sale">超低起拍价</span>
+                                        <span class="new">正在热拍</span>
+                                    #end
+
+                                </div>
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">$!{auctionInfo.categoryName}</p>
+                                <h3 class="product-name"><a href="/getProductDetails.html?productId=$!{auctionInfo.productId}">$!{auctionInfo.productName}</a></h3>
+                                #if($!{auctionInfo.price} == 0)
+                                    <span>当前价：</span><h4 class="product-price">￥$!{auctionInfo.basePrice} <del class="product-old-price">起拍价：$!{auctionInfo.basePrice}</del></h4>
+                                #else
+                                    <span>当前价：</span><h4 class="product-price">￥$!{auctionInfo.price} <del class="product-old-price">起拍价：$!{auctionInfo.basePrice}</del></h4>
+                                #end
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="product-btns">
+                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                </div>
+                            </div>
+                            <div class="add-to-cart">
+                                <a href="/getProductDetails.html?productId=$!{auctionInfo.productId}"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> 查看详情</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /product -->
+                    #end
+                </div>
+                <!-- /store products -->
+
+                <!-- store bottom filter -->
+                <div class="store-filter clearfix">
+                    <span class="store-qty">Showing 20-100 products</span>
+                    <ul class="store-pagination">
+                        <li class="active">1</li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                    </ul>
+                </div>
+                <!-- /store bottom filter -->
+            </div>
+            <!-- /STORE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>

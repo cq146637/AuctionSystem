@@ -1,0 +1,12 @@
+org\sczs\auction\service\CategoryService.class
+org\sczs\auction\service\AuctionRecordService.class
+org\sczs\auction\service\SaleUserService.class
+org\sczs\auction\service\RoleService.class
+org\sczs\auction\service\OrderInfoService.class
+org\sczs\auction\service\RolePermissionService.class
+org\sczs\auction\service\ErpUserService.class
+org\sczs\auction\service\ProductImgService.class
+org\sczs\auction\service\AuctionInfoService.class
+org\sczs\auction\service\RemarkService.class
+org\sczs\auction\service\PayUserService.class
+org\sczs\auction\service\ProductService.class

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sczs.auction.dao.RemarkMapper">
+  <resultMap id="BaseResultMap" type="org.sczs.auction.domain.Remark">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="pay_user_id" jdbcType="INTEGER" property="payUserId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from remark
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.sczs.auction.domain.Remark" useGeneratedKeys="true">
+    insert into remark (product_id, pay_user_id, content)
+    values (#{productId,jdbcType=INTEGER}, #{payUserId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.sczs.auction.domain.Remark">
+    update remark
+    set product_id = #{productId,jdbcType=INTEGER},
+      pay_user_id = #{payUserId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, product_id, pay_user_id, content, create_time
+    from remark
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, product_id, pay_user_id, content, create_time
+    from remark
+  </select>
+  <select id="getRemarkAllByProductId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, product_id, pay_user_id, content, create_time
+    from remark
+    where product_id = #{productId}
+  </select>
+</mapper>

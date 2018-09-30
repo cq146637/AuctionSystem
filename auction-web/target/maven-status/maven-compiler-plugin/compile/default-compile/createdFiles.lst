@@ -1,0 +1,16 @@
+org\sczs\auction\controller\backend\ErpRemarkController.class
+org\sczs\auction\controller\backend\ErpCategoryController.class
+org\sczs\auction\controller\backend\ErrorController.class
+org\sczs\auction\controller\backend\ErpErpUserController.class
+org\sczs\auction\controller\backend\ErpProductImgController.class
+org\sczs\auction\controller\frontend\RegisterController.class
+org\sczs\auction\controller\backend\ErpProductController.class
+org\sczs\auction\controller\backend\ErpPayUserController.class
+org\sczs\auction\utils\MsgJson.class
+org\sczs\auction\controller\frontend\IndexController.class
+org\sczs\auction\controller\backend\DashBoardController.class
+org\sczs\auction\controller\frontend\LoginController.class
+org\sczs\auction\controller\backend\ErpSaleUserController.class
+org\sczs\auction\controller\backend\ErpAuctionController.class
+org\sczs\auction\controller\backend\ErpLoginController.class
+org\sczs\auction\controller\backend\ErpOrderInfoController.class

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sczs.auction.dao.AuctionInfoShowMapper">
+    <resultMap id="BaseResultMap" type="org.sczs.auction.dto.AuctionInfoShow">
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+        <result column="product_id" jdbcType="INTEGER" property="productId" />
+        <result column="product_name" jdbcType="VARCHAR" property="productName" />
+        <result column="price" jdbcType="INTEGER" property="price" />
+        <result column="base_price" jdbcType="INTEGER" property="basePrice" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+    </resultMap>
+    <select id="selectShowingAll" resultMap="BaseResultMap">
+    SELECT url,category_name,auction_info.product_id,product_name,base_price,auction_info.status
+	FROM product_img,category,product,auction_info
+	WHERE
+      product_img.img_type="展示图" AND
+      product_img.`product_id` = product.`id` AND
+      product.`category_id` = category.`id` AND
+      product.`id`=auction_info.`product_id` AND
+      auction_info.status = "正在进行"
+  </select>
+
+    <select id="selectPreShowAll" resultMap="BaseResultMap">
+    SELECT url,category_name,auction_info.product_id,product_name,base_price,auction_info.status
+	FROM product_img,category,product,auction_info
+	WHERE
+      product_img.img_type="展示图" AND
+      product_img.`product_id` = product.`id` AND
+      product.`category_id` = category.`id` AND
+      product.`id`=auction_info.`product_id` AND
+      auction_info.status = "未开始"
+  </select>
+
+    <select id="selectAllByCategory" resultMap="BaseResultMap">
+        SELECT url,category_name,auction_info.product_id,product_name,base_price,auction_info.status
+        FROM product_img,category,product,auction_info
+        WHERE
+        product_img.img_type="展示图" AND
+        product_img.`product_id` = product.`id` AND
+        product.`category_id` = category.`id` AND
+        product.`id`=auction_info.`product_id` AND
+        category.`category_name` = #{categoryName,jdbcType=VARCHAR};
+    </select>
+
+    <select id="searchProductByCondition" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT url,category_name,auction_info.product_id,product_name,base_price,auction_info.status
+	FROM product_img,category,product,auction_info
+	WHERE
+      product_img.img_type="展示图" AND
+      product_img.`product_id` = product.`id` AND
+      product.`category_id` = category.`id` AND
+      product.`id`=auction_info.`product_id` AND
+      product.id=#{id,jdbcType=INTEGER}
+  </select>
+
+</mapper>

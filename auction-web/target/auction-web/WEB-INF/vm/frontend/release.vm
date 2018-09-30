@@ -1,0 +1,279 @@
+#set($layout = "frontend/layout/sale.vm")
+<link rel="stylesheet" href="../assets/libs/AdminLTE-2.4.5/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/libs/AdminLTE-2.4.5/bower_components/bootstrap-fileinput/css/fileinput.min.css ">
+<!-- NAVIGATION -->
+<nav id="navigation" xmlns="http://www.w3.org/1999/html">
+    <!-- container -->
+    <div class="container">
+        <!-- responsive-nav -->
+        <div id="responsive-nav">
+            <!-- NAV -->
+            <ul class="main-nav nav navbar-nav">
+                <li><a href="/sale_user_home.html">家</a></li>
+                <li><a href="#">修改个人信息</a></li>
+                <li><a href="#">修改密码</a></li>
+                <li class="active"><a href="#">发布商品</a></li>
+            </ul>
+            <!-- /NAV -->
+        </div>
+        <!-- /responsive-nav -->
+    </div>
+    <!-- /container -->
+</nav>
+<!-- /NAVIGATION -->
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">发布商品</h3>
+                <ul class="breadcrumb-tree">
+                    <li><a href="/pay_user_home.html">家</a></li>
+                    <li class="active">发布商品</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <form id="offerOrderForm" action="/release.html" method="post">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-12">
+                    <!-- Billing Details -->
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">信息填写</h3>
+                        </div>
+                        <div class="form-group" style="display:none;">
+                            <label for="category_id_input">分类ID</label>
+                            <input type="text" class="form-control" id="category_id_input" name="categoryId"  value="$!{categoryList[0].id}" placeholder="分类ID">
+                        </div>
+                        <div class="form-group">
+                            <label>分类名称</label>
+                            <select id="select_category" onchange="change_category_id(this);" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" name="categoryName">
+                                #foreach($category in $categoryList)
+                                    #if (${velocityCount} == 1)
+                                        <option selected="selected" value="$!{category.id}">$!{category.categoryName}</option>
+                                    #else
+                                        <option value="$!{category.id}">$!{category.categoryName}</option>
+                                    #end
+                                #end
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="product_name_id">商品名称</label>
+                            <input id="product_name_id" class="input" type="text" name="productName" placeholder="商品名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="product_description_id">商品描述</label>
+                            <textarea id="product_description_id" class="input" name="productDescribe" placeholder="商品描述"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="base_price_id">起拍价</label>
+                            <input id="base_price_id" class="input" type="text" name="basePrice" placeholder="起拍价">
+                        </div>
+                        <div class="form-group">
+                            <label for="top_price_id">封顶价</label>
+                            <input id="top_price_id" class="input" type="text" name="topPrice" placeholder="封顶价">
+                        </div>
+                        <!-- Date and time range -->
+                        <div class="form-group">
+                            <label>开始时间</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="reservationtime" name="beginTime1">
+                            </div>
+                        </div>
+                        <!-- Date and time range -->
+                        <div class="form-group">
+                            <label>结束时间</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="reservationtime1" name="endTime1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>展示图</label><span>（请记得点击图片的上传按钮）</span>
+                            <input id="showPictureFile" type="file" name="showPictureFile"
+                                   class="file-loading" value="" /> <input type="hidden" id="showPictureFileUUID"
+                                                                           name="url" value="">
+                        </div>
+                        <div class="form-group">
+                            <label>细节图</label><span>（请记得点击图片的上传按钮，细节图至少4张哦）</span>
+                            <input id="detailPictureFile" type="file" name="showPictureFile"
+                                   multiple class="file-loading" value="" /> <input id="detailPictureFileUUID" type="hidden"
+                                                                                    name="urlList" value="">
+                        </div>
+                        <div class="form-group" style="display: none;">
+                            <input type="input" name="status" value="未开始">
+                        </div>
+                        <div class="form-group" style="display: none;">
+                            <input type="input" name="payCount" value="0">
+                        </div>
+                    </div>
+                    <!-- /Billing Details -->
+
+                    <input type="button" class="primary-btn order-submit" value="返回" onclick="cancel_release();" />
+                    <input type="button" class="primary-btn order-submit" value="确认发布" onclick="button_click1()" />
+                    <button id="button_onclick1" onclick="offerRelease();" style="display: none;"></button>
+                </div>
+
+            </div>
+            <!-- /row -->
+        </form>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- 导入本页面专用的JS -->
+<!-- jQuery 3 -->
+<script src="../assets/libs/AdminLTE-2.4.5/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../assets/libs/AdminLTE-2.4.5/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- date-range-picker -->
+<script src="../assets/libs/AdminLTE-2.4.5/bower_components/moment/min/moment.min.js"></script>
+<script src="../assets/libs/AdminLTE-2.4.5/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- daterange picker -->
+<link rel="stylesheet" href="../assets/libs/AdminLTE-2.4.5/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="../assets/libs/AdminLTE-2.4.5/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<!-- bootstrap-fileinput -->
+<script src="../assets/libs/AdminLTE-2.4.5/bower_components/bootstrap-fileinput/js/fileinput.min.js "></script>
+<script src="../assets/libs/AdminLTE-2.4.5/bower_components/bootstrap-fileinput/js/locales/zh.js "></script>
+<!-- JS导入完成-->
+<script>
+    function button_click1() {
+        $("#button_onclick1").click();
+    }
+    /*订单提交*/
+    function offerRelease() {
+        $("#offerOrderForm").submit(function (event) {
+            if ($("#product_name_id").val().length == 0 || $("#product_description_id").val().length == 0 || $("#base_price_id").val().length == 0 ||
+                    $("#top_price_id").val().length == 0 || $("#reservationtime").val().length == 0 || $("#reservationtime1").val().length == 0 ||
+                    $("#showPictureFileUUID").val().length == 0 || $("#detailPictureFileUUID").val().length == 0) {
+                event.preventDefault();
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('请完善发布信息！');
+                });
+                return;
+            }
+        });
+    }
+    $("#detailPictureFile").fileinput({
+        //上传的地址
+        uploadUrl:"/erp/StoreProductImg.html",
+        uploadAsync : true, //默认异步上传
+        showUpload : false, //是否显示上传按钮,跟随文本框的那个
+        showRemove : false, //显示移除按钮,跟随文本框的那个
+        showCaption : true,//是否显示标题,就是那个文本框
+        showPreview : true, //是否显示预览,不写默认为true
+        dropZoneEnabled : false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+        browseClass: "btn btn-danger", //按钮样式
+        //minImageWidth: 50, //图片的最小宽度
+        //minImageHeight: 50,//图片的最小高度
+        //maxImageWidth: 1000,//图片的最大宽度
+        //maxImageHeight: 1000,//图片的最大高度
+        //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+        //minFileCount: 0,
+        maxFileCount : 4, //表示允许同时上传的最大文件个数
+        enctype : 'multipart/form-data',
+        validateInitialCount : true,
+        previewFileIcon : "<i class='glyphicon glyphicon-king'></i>",
+        msgFilesTooMany : "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        allowedFileTypes : [ 'image' ],//配置允许文件上传的类型
+        allowedPreviewTypes : [ 'image' ],//配置所有的被预览文件类型
+        allowedPreviewMimeTypes : [ 'jpg', 'png', 'gif' ],//控制被预览的所有mime类型
+        language : 'zh'
+    });
+    //异步上传返回结果处理
+    $("#detailPictureFile").on("fileuploaded", function(event, data, previewId, index) {
+        var ref = $(this).attr("data-ref");
+        console.log(data.response.message);
+        $("#detailPictureFileUUID").val($("#detailPictureFileUUID").val() + "," + data.response.message);
+    });
+
+    $("#showPictureFile").fileinput({
+        //上传的地址
+        uploadUrl:"/erp/StoreProductImg.html",
+        uploadAsync : true, //默认异步上传
+        showUpload : false, //是否显示上传按钮,跟随文本框的那个
+        showRemove : false, //显示移除按钮,跟随文本框的那个
+        showCaption : true,//是否显示标题,就是那个文本框
+        showPreview : true, //是否显示预览,不写默认为true
+        dropZoneEnabled : false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+        browseClass: "btn btn-danger", //按钮样式
+        //minImageWidth: 50, //图片的最小宽度
+        //minImageHeight: 50,//图片的最小高度
+        //maxImageWidth: 1000,//图片的最大宽度
+        //maxImageHeight: 1000,//图片的最大高度
+        //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+        //minFileCount: 0,
+        maxFileCount : 1, //表示允许同时上传的最大文件个数
+        enctype : 'multipart/form-data',
+        validateInitialCount : true,
+        previewFileIcon : "<i class='glyphicon glyphicon-king'></i>",
+        msgFilesTooMany : "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        allowedFileTypes : [ 'image' ],//配置允许文件上传的类型
+        allowedPreviewTypes : [ 'image' ],//配置所有的被预览文件类型
+        allowedPreviewMimeTypes : [ 'jpg', 'png', 'gif' ],//控制被预览的所有mime类型
+        language : 'zh'
+    });
+    //异步上传返回结果处理
+    $("#showPictureFile").on("fileuploaded", function(event, data, previewId, index) {
+        var ref = $(this).attr("data-ref");
+        $("#showPictureFileUUID").val(data.response.message);
+
+    });
+    //Date range picker with time picker
+    var cb = function(start, end, label) {
+        $('#scheduledEndTime span').html(start.format('YYYY-MM-DD HH:mm:ss'));
+    };
+    var optionSet1 = {
+        startDate: moment().subtract(0, 'days'),
+        showDropdowns: false,
+        showWeekNumbers: false,
+        timePicker: true,
+        timePickerIncrement: 1,
+        singleDatePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm:ss',
+            daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        },
+        opens: 'left',
+        buttonClasses: ['btn btn-default'],
+        applyClass: 'btn-small btn-primary',
+        cancelClass: 'btn-small',
+        format: 'YYYY-MM-DD HH:mm:ss',
+
+    };
+    $('#scheduledEndTime span').html(moment().subtract(29, 'days').format('YYYY-MM-DD HH:mm:ss'));
+    $('#reservationtime').daterangepicker(optionSet1, cb);
+    $('#reservationtime1').daterangepicker(optionSet1, cb);
+    $("#select_product").change(function () {
+        $("#exampleInputText0").val($(this).val());
+    })
+    function cancel_release() {
+        url =  $("#showPictureFileUUID").val();
+        urlList = $("#detailPictureFileUUID").val();
+        window.location.href = "/release_cancel.html?url=" + url + "&urlList=" + urlList;
+    }
+</script>

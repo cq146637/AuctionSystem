@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="../assets/image/favicon.ico" type="image/x-icon" />
+    <title>SCZS拍卖</title>
+    #*layui*#
+    <link rel="stylesheet" href="../assets/libs/layui/css/layui.css">
+    <script src="../assets/libs/layui/layui.js"></script>
+    #*sczs_frontend*#
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../assets/libs/sczs_frontend/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/libs/sczs_frontend/css/slick.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/libs/sczs_frontend/css/slick-theme.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/libs/sczs_frontend/css/nouislider.min.css"/>
+    <link rel="stylesheet" href="../assets/libs/sczs_frontend/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="../assets/libs/sczs_frontend/css/style.css"/>
+
+    #*frontend.js*#
+    <script src="../assets/js/frontend.js"></script>
+</head>
+<body>
+    #parse("frontend/common/header.vm")
+    $screen_content
+    #parse("frontend/common/footer.vm")
+
+    <!--sczs_frontend js-->
+    <script src="../assets/libs/sczs_frontend/js/jquery.min.js"></script>
+    <script src="../assets/libs/sczs_frontend/js/bootstrap.min.js"></script>
+    <script src="../assets/libs/sczs_frontend/js/slick.min.js"></script>
+    <script src="../assets/libs/sczs_frontend/js/nouislider.min.js"></script>
+    <script src="../assets/libs/sczs_frontend/js/jquery.zoom.min.js"></script>
+    <script src="../assets/libs/sczs_frontend/js/main.js"></script>
+    <script>
+        layui.use('util', function(){
+            var util = layui.util;
+
+            //执行
+            util.fixbar({
+                bar1: true
+                ,click: function(type){
+                    console.log(type);
+                    if(type === 'bar1'){
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

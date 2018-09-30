@@ -1,0 +1,66 @@
+#set($saleUser=$session.getAttribute("saleUser"))
+<!-- HEADER -->
+<header>
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-left">
+                #if(!$saleUser)
+                    <li><a href="#"><i class="fa fa-phone"></i> 无</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> 无</a></li>
+                #else
+                    <li><a href="#"><i class="fa fa-phone"></i> $!{saleUser.phone}</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> $!{saleUser.email}</a></li>
+                #end
+            </ul>
+            <ul class="header-links pull-right">
+                #if(!$saleUser)
+                    <li><a href="/register/userRegister.html"><i class="fa fa-dollar"></i> 免费注册</a></li>
+                    <li><a href="/login/userLogin.html"><i class="fa fa-user-o"></i> 请登录</a></li>
+                #else
+                    <li><a href="#"><i class="fa fa-user-o"></i> $!{saleUser.userName}</a></li>
+                    <li><a href="/sale_login/saleUserQuit.html"><i class="fa fa-user-o"></i> 退出</a></li>
+                #end
+            </ul>
+        </div>
+    </div>
+    <!-- /TOP HEADER -->
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="#" class="logo">
+                            <img src="../assets/image/sczs_logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>
+<!-- /HEADER -->

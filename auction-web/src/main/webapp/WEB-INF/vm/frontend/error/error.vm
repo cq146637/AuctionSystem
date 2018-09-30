@@ -1,0 +1,57 @@
+#set($layout = "frontend/layout/blank.vm")
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+
+        .head404{ width:580px; height:234px; margin:50px auto 0 auto;) no-repeat; }
+
+        .txtbg404{ width:499px; height:169px; margin:10px auto 0 auto; background:url(https://www.daixiaorui.com/Public/images/txtbg404.png) no-repeat;}
+
+        .txtbg404 .txtbox{ width:390px; position:relative; top:30px; left:60px;color:#eee; font-size:13px;}
+
+        .txtbg404 .txtbox p {margin:5px 0; line-height:18px;}
+
+        .txtbg404 .txtbox .paddingbox { padding-top:15px;}
+
+        .txtbg404 .txtbox p a { color:#eee; text-decoration:none;}
+
+        .txtbg404 .txtbox p a:hover { color:#FC9D1D; text-decoration:underline;}
+
+    </style>
+</head>
+<body bgcolor="#494949">
+    <div style="width: 100%;height: 400px;">
+
+        <div align="center"><h1>$!{errorCode}</h1></div>
+
+        <div class="txtbg404">
+
+            <div class="txtbox">
+                #if($!{errorCode} == "400")
+                    <p>错误的请求</p>
+                #elseif($!{errorCode} == "403")
+                    <p>您没有访问的权限</p>
+                #elseif($!{errorCode} == "404")
+                    <p>您访问的页面找不到</p>
+                #elseif($!{errorCode} == "500")
+                    <p>服务器内部出现了错误</p>
+                #end
+
+                <p class="paddingbox">请点击以下链接继续浏览网页</p>
+
+                <p>>>><a style="cursor:pointer" onclick="history.back()">返回上一页面</a></p>
+
+                <p>>>><a href="/index.html">返回网站首页</a></p>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+
+
+

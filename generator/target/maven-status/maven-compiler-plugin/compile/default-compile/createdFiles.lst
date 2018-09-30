@@ -1,0 +1,4 @@
+org\sczs\auction\base\BaseService.class
+org\sczs\auction\generator\CodeGenerator.class
+org\sczs\auction\base\BaseDao.class
+org\sczs\auction\generator\LombokPlugin.class

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sczs.auction.dao.SaleUserMapper">
+
+  <sql id="query_where_clause">
+    <where>
+      <if test="id != null">
+        <![CDATA[AND id = #{id}]]>
+      </if>
+      <if test="userName != null">
+        <![CDATA[AND user_name = #{userName}]]>
+      </if>
+      <if test="password != null">
+        <![CDATA[AND password = #{password}]]>
+      </if>
+      <if test="phone != null">
+        <![CDATA[AND phone = #{phone}]]>
+      </if>
+      <if test="roleId != null">
+        <![CDATA[AND role_id = #{roleId}]]>
+      </if>
+      <if test="realName != null">
+        <![CDATA[AND real_name = #{realName}]]>
+      </if>
+      <if test="email != null">
+        <![CDATA[AND email = #{email}]]>
+      </if>
+      <if test="address != null">
+        <![CDATA[AND address = #{address}]]>
+      </if>
+      <if test="zipCode != null">
+        <![CDATA[AND zip_code = #{zipCode}]]>
+      </if>
+      <if test="creditLevel != null">
+        <![CDATA[AND credit_level = #{creditLevel}]]>
+      </if>
+      <if test="createTime != null">
+        <![CDATA[AND create_time = #{createTime}]]>
+      </if>
+    </where>
+  </sql>
+
+  <resultMap id="BaseResultMap" type="org.sczs.auction.domain.SaleUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="zip_code" jdbcType="VARCHAR" property="zipCode" />
+    <result column="credit_level" jdbcType="VARCHAR" property="creditLevel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sale_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.sczs.auction.domain.SaleUser" useGeneratedKeys="true">
+    insert into sale_user (user_name, password, phone,
+      role_id, real_name, email,
+      address, zip_code, credit_level)
+    values (#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{roleId,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR}, #{creditLevel,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.sczs.auction.domain.SaleUser">
+    update sale_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER},
+      real_name = #{realName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      credit_level = #{creditLevel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_name, password, phone, role_id, real_name, email, address, zip_code,
+    credit_level, create_time
+    from sale_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_name, password, phone, role_id, real_name, email, address, zip_code,
+    credit_level, create_time
+    from sale_user
+  </select>
+  <select id="getSaleUserByProductId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_name, password, phone, role_id, real_name, email, address, zip_code,
+    credit_level, create_time
+    from sale_user
+    where id=(SELECT sale_user_id FROM product WHERE id = #{productId,jdbcType=INTEGER});
+  </select>
+  <select id="getSaleUserCount" resultType="java.lang.Integer">
+    select count(*)
+    from sale_user
+  </select>
+  <select id="getSaleUserByCondition" parameterType="org.sczs.auction.domain.SaleUser" resultMap="BaseResultMap">
+    select id, user_name, password, phone, role_id, real_name, email, address, zip_code,
+    credit_level, create_time
+    from sale_user
+    <include refid = "query_where_clause"/>
+  </select>
+</mapper>

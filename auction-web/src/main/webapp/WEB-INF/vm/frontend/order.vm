@@ -1,0 +1,203 @@
+<!-- NAVIGATION -->
+<nav id="navigation" xmlns="http://www.w3.org/1999/html">
+    <!-- container -->
+    <div class="container">
+        <!-- responsive-nav -->
+        <div id="responsive-nav">
+            <!-- NAV -->
+            <ul class="main-nav nav navbar-nav">
+                <li><a href="/">首页</a></li>
+                <li class="active"><a href="/pay_user_home.html">家</a></li>
+                <li><a href="#">修改个人信息</a></li>
+                <li><a href="#">修改密码</a></li>
+            </ul>
+            <!-- /NAV -->
+        </div>
+        <!-- /responsive-nav -->
+    </div>
+    <!-- /container -->
+</nav>
+<!-- /NAVIGATION -->
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">订单结算</h3>
+                <ul class="breadcrumb-tree">
+                    <li><a href="/pay_user_home.html">家</a></li>
+                    <li class="active">订单结算</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <form id="offerOrderForm" action="/order.html" method="post">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-7">
+                    <!-- Billing Details -->
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">订单填写</h3>
+                        </div>
+                        <div class="form-group" style="display:none;">
+                            <input class="input" type="text" name="auctionRecordId" value="$!{auctionRecord.id}">
+                        </div>
+                        <div class="form-group">
+                            <input id="name_input_id" class="input" type="text" name="name" placeholder="姓名">
+                        </div>
+                        <div class="form-group">
+                            <input id="acceiptAddress_input_id" class="input" type="text" name="acceiptAddress" placeholder="收货地址">
+                        </div>
+                        <div class="form-group">
+                            <input id="zipCode_input_id" class="input" type="text" name="zipCode" placeholder="邮编">
+                        </div>
+                        <div class="form-group">
+                            <input id="phone_input_id" class="input" type="tel" name="phone" placeholder="手机">
+                        </div>
+                        <div class="form-group">
+                            <label >快递商家</label>
+                            <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverType">
+                                <option>京东快递</option>
+                                <option>圆通快递</option>
+                                <option>顺丰快递</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /Billing Details -->
+                    <input type="button" class="primary-btn order-submit" value="返回" onclick="history.go(-1)" />
+                </div>
+
+                <!-- Order Details -->
+                <div class="col-md-5 order-details">
+                    <div class="section-title text-center">
+                        <h3 class="title">竞拍信息</h3>
+                    </div>
+                    <div class="order-summary">
+                        <div class="order-col">
+                            <div><strong>竞拍商品</strong></div>
+                            <div><strong>最终出价</strong></div>
+                        </div>
+                        <div class="order-products">
+                            <div class="order-col">
+                                <div>$!{product.productName}</div>
+                                <div>$!{auctionRecord.price}</div>
+                            </div>
+                        </div>
+                        <div class="order-col">
+                            <div><strong>商品记录</strong></div>
+                            <div><strong>总计</strong></div>
+                        </div>
+                        <div class="order-products">
+                            <div class="order-col">
+                                <div>起拍价</div>
+                                <div>$!{auctionInfo.basePrice}</div>
+                            </div>
+                            <div class="order-col">
+                                <div>封顶价</div>
+                                <div>$!{auctionInfo.topPrice}</div>
+                            </div>
+                            <div class="order-col">
+                                <div>拍卖次数</div>
+                                <div>$!{auctionInfo.payCount}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-method">
+                        <div class="input-radio">
+                            <input type="radio" name="payment" id="payment-1">
+                            <label for="payment-1">
+                                <span></span>
+                                直接银行转账
+                            </label>
+                            <div class="caption">
+                                <p>银行转账须知.</p>
+                            </div>
+                        </div>
+                        <div class="input-radio">
+                            <input type="radio" name="payment" id="payment-2">
+                            <label for="payment-2">
+                                <span></span>
+                                支票付款
+                            </label>
+                            <div class="caption">
+                                <p>支票付款须知.</p>
+                            </div>
+                        </div>
+                        <div class="input-radio">
+                            <input type="radio" name="payment" id="payment-3">
+                            <label for="payment-3">
+                                <span></span>
+                                Paypal系统
+                            </label>
+                            <div class="caption">
+                                <p>Paypal系统支付须知.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="end_terms">
+                        <label for="end_terms">
+                            <span></span>
+                            我已阅读并接受条款和条件 <a href="#"></a>
+                        </label>
+                    </div>
+                    <input type="button" class="primary-btn order-submit" value="下订单" onclick="button_click()" />
+                    <button id="button_onclick" onclick="offerOrder();" style="display: none;"></button>
+                </div>
+                <!-- /Order Details -->
+            </div>
+            <!-- /row -->
+        </form>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<script>
+    /*订单提交*/
+    function button_click() {
+        $("#button_onclick").click();
+    }
+    function offerOrder() {
+        $("#offerOrderForm").submit(function (event) {
+            if (!$("[name='payment']:eq(0)").prop("checked") && !$("[name='payment']:eq(1)").prop("checked")  && !$("[name='payment']:eq(2)").prop("checked")){
+                event.preventDefault();
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('请先选择支付方式！');
+                });
+                return;
+            }
+            if (!$("#end_terms").prop("checked")) {
+                event.preventDefault();
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('请先阅读并接受条款和条件！');
+                });
+                return;
+            }
+            //acceiptAddress_input_id, phone_input_id
+            if ($("#acceiptAddress_input_id").val().length == 0 || $("#acceiptAddress_input_id").val().length == 0 || $("#name_input_id").val().length == 0 || $("#zipCode_input_id").val().length == 0) {
+                event.preventDefault();
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('请完善订单信息！');
+                });
+                return;
+            }
+        });
+    }
+</script>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sczs.auction.dao.PayUserMapper">
+  <sql id="query_where_clause">
+    <where>
+      <if test="id != null">
+        <![CDATA[AND id = #{id}]]>
+      </if>
+      <if test="userName != null">
+        <![CDATA[AND user_name = #{userName}]]>
+      </if>
+      <if test="password != null">
+        <![CDATA[AND password = #{password}]]>
+      </if>
+      <if test="phone != null">
+        <![CDATA[AND phone = #{phone}]]>
+      </if>
+      <if test="roleId != null">
+        <![CDATA[AND role_id = #{roleId}]]>
+      </if>
+      <if test="createTime != null">
+        <![CDATA[AND create_time = #{createTime}]]>
+      </if>
+    </where>
+  </sql>
+  <resultMap id="BaseResultMap" type="org.sczs.auction.domain.PayUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pay_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.sczs.auction.domain.PayUser" useGeneratedKeys="true">
+    insert into pay_user (user_name, password, phone,
+      role_id)
+    values (#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{roleId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.sczs.auction.domain.PayUser">
+    update pay_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_name, password, phone, role_id, create_time
+    from pay_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_name, password, phone, role_id, create_time
+    from pay_user
+  </select>
+
+  <!--根据condition查询PayUser-->
+  <select id="getPayUserByCondition" parameterType="org.sczs.auction.domain.PayUser" resultMap="BaseResultMap">
+    select id, user_name, password, phone, role_id, create_time
+    from pay_user
+    <include refid = "query_where_clause"/>
+  </select>
+  <select id="getPayUserCount" resultType="java.lang.Integer">
+    select count(*)
+    from pay_user
+  </select>
+</mapper>

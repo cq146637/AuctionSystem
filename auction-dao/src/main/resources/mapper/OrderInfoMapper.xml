@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sczs.auction.dao.OrderInfoMapper">
+  <resultMap id="BaseResultMap" type="org.sczs.auction.domain.OrderInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="auction_record_id" jdbcType="INTEGER" property="auctionRecordId" />
+    <result column="acceipt_address" jdbcType="VARCHAR" property="acceiptAddress" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="deliver_type" jdbcType="VARCHAR" property="deliverType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.sczs.auction.domain.OrderInfo" useGeneratedKeys="true">
+    insert into order_info (auction_record_id, acceipt_address,
+      phone, deliver_type
+      )
+    values (#{auctionRecordId,jdbcType=INTEGER}, #{acceiptAddress,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{deliverType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.sczs.auction.domain.OrderInfo">
+    update order_info
+    set auction_record_id = #{auctionRecordId,jdbcType=INTEGER},
+      acceipt_address = #{acceiptAddress,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      deliver_type = #{deliverType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, auction_record_id, acceipt_address, phone, deliver_type, create_time
+    from order_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, auction_record_id, acceipt_address, phone, deliver_type, create_time
+    from order_info
+  </select>
+  <select id="getOrderInfoCount" resultType="java.lang.Integer">
+    select count(*)
+    from order_info
+  </select>
+  <select id="queryOrderInfoByAuctionRecordId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, auction_record_id, acceipt_address, phone, deliver_type, create_time
+    from order_info
+    where auction_record_id = #{id}
+  </select>
+</mapper>

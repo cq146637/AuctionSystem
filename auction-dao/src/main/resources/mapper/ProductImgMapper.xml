@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sczs.auction.dao.ProductImgMapper">
+  <resultMap id="BaseResultMap" type="org.sczs.auction.domain.ProductImg">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="img_type" jdbcType="VARCHAR" property="imgType" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from product_img
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.sczs.auction.domain.ProductImg" useGeneratedKeys="true">
+    insert into product_img (product_id, img_type, url
+      )
+    values (#{productId,jdbcType=INTEGER}, #{imgType,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.sczs.auction.domain.ProductImg">
+    update product_img
+    set product_id = #{productId,jdbcType=INTEGER},
+      img_type = #{imgType,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, product_id, img_type, url
+    from product_img
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, product_id, img_type, url
+    from product_img
+  </select>
+  <select id="selectByProductIdAndImgType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, product_id, img_type, url
+    from product_img
+    where product_id = #{id} and img_type = "展示图"
+  </select>
+  <select id="selectByProductId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, product_id, img_type, url
+    from product_img
+    where product_id = #{productId,jdbcType=INTEGER} and img_type="细节图";
+  </select>
+</mapper>

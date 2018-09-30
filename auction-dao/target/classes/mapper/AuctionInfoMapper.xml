@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sczs.auction.dao.AuctionInfoMapper">
+  <resultMap id="BaseResultMap" type="org.sczs.auction.domain.AuctionInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="base_price" jdbcType="INTEGER" property="basePrice" />
+    <result column="top_price" jdbcType="INTEGER" property="topPrice" />
+    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="pay_count" jdbcType="INTEGER" property="payCount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from auction_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.sczs.auction.domain.AuctionInfo" useGeneratedKeys="true">
+    insert into auction_info (product_id, base_price, top_price,
+      begin_time, end_time, status,
+      pay_count)
+    values (#{productId,jdbcType=INTEGER}, #{basePrice,jdbcType=INTEGER}, #{topPrice,jdbcType=INTEGER},
+      #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR},
+      #{payCount,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.sczs.auction.domain.AuctionInfo">
+    update auction_info
+    set product_id = #{productId,jdbcType=INTEGER},
+      base_price = #{basePrice,jdbcType=INTEGER},
+      top_price = #{topPrice,jdbcType=INTEGER},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      pay_count = #{payCount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, product_id, base_price, top_price, begin_time, end_time, status, pay_count,
+    create_time
+    from auction_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, product_id, base_price, top_price, begin_time, end_time, status, pay_count,
+    create_time
+    from auction_info
+  </select>
+  <select id="selectByProductIdAndStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, product_id, base_price, top_price, begin_time, end_time, status, pay_count
+    from auction_info
+    where product_id = #{id,jdbcType=INTEGER} and status = "已结束"
+  </select>
+  <select id="getAuctionInfoByProductId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, product_id, base_price, top_price, begin_time, end_time, status, pay_count,
+    create_time
+    from auction_info
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  <select id="getAuctionInfoCount" resultType="java.lang.Integer">
+    select count(*)
+    from auction_info
+  </select>
+</mapper>

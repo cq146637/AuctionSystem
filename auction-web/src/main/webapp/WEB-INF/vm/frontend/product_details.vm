@@ -1,0 +1,555 @@
+#*商品详情页*#
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="/index.html">首  页</a></li>
+                    <li class="active"> 商  品  详  情 </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<!--countdown-->
+<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+    $.extend($.fn,{
+        //懒人建站 http://www.51xuediannao.com/
+        fnTimeCountDown:function(d){
+            this.each(function(){
+                var $this = $(this);
+                var o = {
+                    hm: $this.find(".hm"),
+                    sec: $this.find(".sec"),
+                    mini: $this.find(".mini"),
+                    hour: $this.find(".hour"),
+                    day: $this.find(".day"),
+                    month:$this.find(".month"),
+                    year: $this.find(".year")
+                };
+                var f = {
+                    haomiao: function(n){
+                        if(n < 10)return "00" + n.toString();
+                        if(n < 100)return "0" + n.toString();
+                        return n.toString();
+                    },
+                    zero: function(n){
+                        var _n = parseInt(n, 10);//解析字符串,返回整数
+                        if(_n > 0){
+                            if(_n <= 9){
+                                _n = "0" + _n
+                            }
+                            return String(_n);
+                        }else{
+                            return "00";
+                        }
+                    },
+                    dv: function(){
+                        //d = d || Date.UTC(2050, 0, 1); //如果未定义时间，则我们设定倒计时日期是2050年1月1日
+                        var _d = $this.data("end") || d;
+                        var now = new Date(),
+                                endDate = new Date(_d);
+                        //现在将来秒差值
+                        //alert(future.getTimezoneOffset());
+                        var dur = (endDate - now.getTime()) / 1000 , mss = endDate - now.getTime() ,pms = {
+                            hm:"000",
+                            sec: "00",
+                            mini: "00",
+                            hour: "00",
+                            day: "00",
+                            month: "00",
+                            year: "0"
+                        };
+                        if(mss > 0){
+                            pms.hm = f.haomiao(mss % 1000);
+                            pms.sec = f.zero(dur % 60);
+                            pms.mini = Math.floor((dur / 60)) > 0? f.zero(Math.floor((dur / 60)) % 60) : "00";
+                            pms.hour = Math.floor((dur / 3600)) > 0? f.zero(Math.floor((dur / 3600)) % 24) : "00";
+                            pms.day = Math.floor((dur / 86400)) > 0? f.zero(Math.floor((dur / 86400)) % 30) : "00";
+                            //月份，以实际平均每月秒数计算
+                            pms.month = Math.floor((dur / 2629744)) > 0? f.zero(Math.floor((dur / 2629744)) % 12) : "00";
+                            //年份，按按回归年365天5时48分46秒算
+                            pms.year = Math.floor((dur / 31556926)) > 0? Math.floor((dur / 31556926)) : "0";
+                        }else{
+                            pms.year=pms.month=pms.day=pms.hour=pms.mini=pms.sec="00";
+                            pms.hm = "000";
+                            //alert('结束了');
+                            return;
+                        }
+                        return pms;
+                    },
+                    ui: function(){
+                        if(o.hm){
+                            o.hm.html(f.dv().hm);
+                        }
+                        if(o.sec){
+                            o.sec.html(f.dv().sec);
+                        }
+                        if(o.mini){
+                            o.mini.html(f.dv().mini);
+                        }
+                        if(o.hour){
+                            o.hour.html(f.dv().hour);
+                        }
+                        if(o.day){
+                            o.day.html(f.dv().day);
+                        }
+                        if(o.month){
+                            o.month.html(f.dv().month);
+                        }
+                        if(o.year){
+                            o.year.html(f.dv().year);
+                        }
+                        setTimeout(f.ui, 1);
+                    }
+                };
+                f.ui();
+            });
+        }
+    });
+
+    Date.prototype.pattern=function(fmt) {
+        var o = {
+            "M+" : this.getMonth()+1, //月份
+            "d+" : this.getDate(), //日
+            "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时
+            "H+" : this.getHours(), //小时
+            "m+" : this.getMinutes(), //分
+            "s+" : this.getSeconds(), //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S" : this.getMilliseconds() //毫秒
+        };
+        var week = {
+            "0" : "/u65e5",
+            "1" : "/u4e00",
+            "2" : "/u4e8c",
+            "3" : "/u4e09",
+            "4" : "/u56db",
+            "5" : "/u4e94",
+            "6" : "/u516d"
+        };
+        if(/(y+)/.test(fmt)){
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        }
+        if(/(E+)/.test(fmt)){
+            fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);
+        }
+        for(var k in o){
+            if(new RegExp("("+ k +")").test(fmt)){
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            }
+        }
+        return fmt;
+    }
+</script>
+<div style="background:rgb(183,17,41);  WIDTH: 100%;  color:#fff;FONT-FAMILY: arial; TEXT-ALIGN: center;font-size: large">
+    #if("$!{auctionInfo.status}" == "未开始")
+        <P style="font-size:.8em;line-height:2em;">距本次拍卖开始还有：</P>
+    #elseif("$!{auctionInfo.status}" == "正在进行")
+        <P style="font-size:.8em;line-height:2em;">距本次拍卖结束还有：</P>
+    #end
+    <div id="fnTimeCountDown" ">
+        <span class="year">00</span>年
+        <span class="month">00</span>月
+        <span class="day">00</span>天
+        <span class="hour">00</span>时
+        <span class="mini">00</span>分
+        <span class="sec">00</span>秒
+        <span class="hm">000</span>
+    </div>
+</div>
+<script type="text/javascript">
+
+    if ("$!{auctionInfo.status}" == "未开始"){
+        $("#fnTimeCountDown").fnTimeCountDown("$!date.format('yyyy-MM-dd HH:mm:ss:SSS',$!{auctionInfo.beginTime})");
+    } else if ("$!{auctionInfo.status}" == "正在进行") {
+
+        $("#fnTimeCountDown").fnTimeCountDown("$!date.format('yyyy-MM-dd HH:mm:ss:SSS',$!{auctionInfo.endTime})");
+    }
+    var interalId = setInterval(function () {
+        console.log(location.href.indexOf('#reloaded'));
+        console.log($(".year").text(), $(".month").text(), $(".day").text(), $(".hour").text() , $(".mini").text() , $(".sec").text());
+        if ($(".year").text() == "0" && $(".month").text() == "00" && $(".day").text() == "00" && $(".hour").text() == "00" && $(".mini").text() == "00" && $(".sec").text() == "00") {
+            if(location.href.indexOf('#reloaded')==-1){
+                setTimeout(function(){
+                    location.href = location.href+"#reloaded";
+                    window.location.reload(true);
+                }, 5000);
+
+            }
+        }
+    }, 1000)
+    if(location.href.indexOf('#reloaded')!=-1) {
+        clearInterval(interalId);
+    }
+</script>
+<!-- /countdown -->
+
+<!-- container -->
+<div class="section">
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Product main img -->
+            <div class="col-md-5 col-md-push-2">
+                <div id="product-main-img">
+                    #foreach($productImg in $productImgList)
+                        <div class="product-preview">
+                            <img src="$!{productImg.url}" alt="">
+                        </div>
+                    #end
+                </div>
+            </div>
+            <!-- /Product main img -->
+
+            <!-- Product thumb imgs -->
+            <div class="col-md-2  col-md-pull-5">
+                <div id="product-imgs">
+
+                    #foreach($productImg in $productImgList)
+                        <div class="product-preview">
+                            <img src="$!{productImg.url}" alt="">
+                        </div>
+                    #end
+                </div>
+            </div>
+            <!-- /Product thumb imgs -->
+
+            <!-- Product details -->
+            <div class="col-md-5">
+                <div class="product-details">
+                    <h2 class="product-name">$!{product.productName}</h2>
+                    <div>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        #*<a class="review-link" href="#">10 Review(s) | Add your review</a>*#
+                    </div>
+                    #if($!{auctionInfo.status} == "已结束")
+                        <!--maskDiv-->
+                        <div id="maskRealDiv" style="padding: 100px;background-color: #7c7c7c;height: 300px;">
+                            <div align="center">
+                                <h1>已结束</h1>
+                            </div>
+                        </div>
+                        <!--/maskDiv-->
+                    #elseif($!{auctionInfo.status} == "流拍")
+                        <!--maskDiv-->
+                        <div id="maskRealDiv" style="padding: 100px;background-color: #7c7c7c;height: 300px;">
+                            <div align="center">
+                                <h1>已流拍</h1>
+                            </div>
+                        </div>
+                        <!--/maskDiv-->
+                    #else
+                        <!--maskRealDiv-->
+                        <div id="maskRealDiv">
+                            <div>
+                                #if($!{auctionInfo.status} == "未开始")
+                                    <span>当前价：</span><h3 class="product-price">￥$!{auctionInfo.basePrice} <del class="product-old-price">起拍价：$!{auctionInfo.basePrice}</del></h3>
+                                #elseif($!{auctionInfo.status} == "正在进行")
+                                    #if($!{recordList.size()} == 0)
+                                        <span>当前价：</span><h3 class="product-price">￥$!{auctionInfo.basePrice} <del class="product-old-price">起拍价：$!{auctionInfo.basePrice}</del></h3>
+                                    #else
+                                        <span>当前价：</span><h3 class="product-price">￥$!{recordList.get(0).getPrice()} <del class="product-old-price">起拍价：$!{auctionInfo.basePrice}</del></h3>
+                                    #end
+                                #end
+                                <span class="product-available">$!{auctionInfo.status}</span>
+                            </div>
+                            <p>$!{product.productDescribe}</p>
+                            <!--clause-->
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="terms">
+                                <label for="terms">
+                                    <span></span>
+                                    我已阅读并接受条款和条件 <a href="#"></a>
+                                </label>
+                            </div>
+                            <!--/clause-->
+                            <form id="offerPriceForm" action="/offerPrice.html" method="post">
+                                <div class="add-to-cart">
+                                    <div class="qty-label">
+                                        出价：
+                                        <input type="hidden" value="$!{payUser.id}" name="payUserId">
+                                        <input type="hidden" value="$!{auctionInfo.id}" name="auctionId">
+                                        <div class="input-number">
+                                            #if($!{auctionInfo.status} == "未开始")
+                                                <input id="offerPriceInput" type="number" min="$!{auctionInfo.basePrice}" max="99999999" placeholder="$!{auctionInfo.basePrice}" name="price">
+                                            #elseif($!{auctionInfo.status} == "正在进行")
+                                                #if($!{recordList.size()} == 0)
+                                                    #set($basePrice = $!{auctionInfo.basePrice}+100)
+                                                    <input id="offerPriceInput" type="number" step="100" min="$!{basePrice}" max="99999999" placeholder="$!{auctionInfo.basePrice}" name="price">
+                                                #else
+                                                    #set($basePrice = $!{recordList.get(0).price}+100)
+                                                    <input id="offerPriceInput" type="number" step="100" min="$!{basePrice}" max="99999999" placeholder="$!{recordList.get(0).price}" name="price">
+                                                #end
+                                            #end
+                                            <span class="qty-up">+</span>
+                                            <span class="qty-down">-</span>
+                                        </div>
+                                        <input type="hidden" value="领先" name="status">
+                                        <input type="hidden" value="$!{auctionInfo.productId}" name="productId">
+
+                                    </div>
+                                    #if($!{auctionInfo.status} == "未开始")'
+                                        <button style="position: relative;
+                                            border: 2px solid transparent;
+                                            height: 40px;
+                                            padding: 0 30px;
+                                            background-color: #7c7c7c;
+                                            color: #FFF;
+                                            text-transform: uppercase;
+                                            font-weight: 700;
+                                            border-radius: 40px;
+                                            -webkit-transition: 0.2s all;
+                                            transition: 0.2s all;" onclick="$('#offerPriceForm').submit(function (event) {event.preventDefault();});"> 立 即 出 价 </button>
+                                    #else
+                                        <button class="add-to-cart-btn" onclick="offerPrice()"><i class="layui-icon layui-icon-rmb"></i> 立 即 出 价 </button>
+                                    #end
+                                </div>
+                            </form>
+                            <ul class="product-links">
+                                <li>分享到:</li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                        </div>
+                        <!--/maskRealDiv-->
+                    #end
+
+
+                </div>
+            </div>
+            <!-- /Product details -->
+
+            <!-- Product tab -->
+            <div class="col-md-12">
+                <div id="product-tab">
+                    <!-- product tab nav -->
+                    <ul class="tab-nav">
+                        <li class="active"><a data-toggle="tab" href="#tab1" aria-expanded="true">拍品详情</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab2" aria-expanded="false">竞拍记录</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab3" aria-expanded="false">留言</a></li>
+                    </ul>
+                    <!-- /product tab nav -->
+
+                    <!-- product tab content -->
+                    <div class="tab-content">
+                        <!-- tab1  -->
+                        <div id="tab1" class="tab-pane fade active in">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>$!{product.productDescribe}</p>
+                                </div>
+                                #foreach($productImg in $productImgList)
+                                    <div class="col-md-12">
+                                        <img src="$!{productImg.url}" style="height: 600px;width: 100%; margin: 20px">
+                                    </div>
+                                #end
+                            </div>
+                        </div>
+                        <!-- /tab1  -->
+
+                        <!-- tab2  -->
+                        <div id="tab2" class="tab-pane fade">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table">
+                                        <tr>
+                                            <th>状态</th>
+                                            <th>竞买号</th>
+                                            <th>出价</th>
+                                            <th>时间</th>
+                                        </tr>
+                                        #if($!{recordList.size()} == 0)
+                                            <td colspan="4">暂无数据</td>
+                                        #else
+                                            #foreach($auctionRecord in $recordList)
+                                                <tr>
+                                                    <td>$!{auctionRecord.status}</td>
+                                                    <td>$!{auctionRecord.payUserId}</td>
+                                                    <td>$!{auctionRecord.price}</td>
+                                                    <td>$!date.format('yyyy-MM-dd HH:mm:ss:SSS',$!{auctionRecord.createTime})</td>
+                                                </tr>
+                                            #end
+                                        #end
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /tab2  -->
+
+                        <!-- tab3  -->
+                        <div id="tab3" class="tab-pane fade">
+                            <div class="row">
+                                <!-- Rating -->
+                                <div class="col-md-3">
+                                    <div id="rating">
+                                        <div class="rating-avg">
+                                            <span>4.5</span>
+                                            <div class="rating-stars">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                            </div>
+                                        </div>
+                                        <ul class="rating">
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div style="width: 80%;"></div>
+                                                </div>
+                                                <span class="sum">3</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div style="width: 60%;"></div>
+                                                </div>
+                                                <span class="sum">2</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div></div>
+                                                </div>
+                                                <span class="sum">0</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div></div>
+                                                </div>
+                                                <span class="sum">0</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div></div>
+                                                </div>
+                                                <span class="sum">0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Rating -->
+
+                                <!-- Reviews -->
+                                <div class="col-md-6">
+                                    <div id="reviews">
+                                        #if($remarkList.size() == 0)
+                                            暂无数据
+                                        #else
+                                            #foreach($remark in $remarkList)
+                                                <ul class="reviews">
+                                                    <li>
+                                                        <div class="review-heading">
+                                                            <h5 class="name">$payUserMap.get($!{remark.payUserId})</h5>
+                                                            <p class="date">$!date.format('yyyy-MM-dd HH:mm:ss:SSS',$!{remark.createTime})</p>
+                                                            <div class="review-rating">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-o empty"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="review-body">
+                                                            <p>$!{remark.content}</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            #end
+
+                                        #end
+                                        <ul class="reviews-pagination">
+                                            <li class="active">1</li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Reviews -->
+
+                                <!-- Review Form -->
+                                <div class="col-md-3">
+                                    <div id="review-form">
+                                        <form class="review-form" id="submitRemarkForm" action="/submitRemark.html">
+                                            <input type="hidden" value="$!{product.id}" name="productId">
+                                            <input type="hidden" value="$!{payUser.id}" name="payUserId">
+                                            <textarea id="remarkTextarea" class="input" placeholder="有什么想说的" name="content"></textarea>
+                                            <span id="remarkMessage" style="color: #9e0505"></span>
+                                            <div class="input-rating">
+                                                <span>推荐指数: </span>
+                                                <div class="stars">
+                                                    <input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+                                                    <input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+                                                    <input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+                                                    <input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+                                                    <input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+                                                </div>
+                                            </div>
+                                            <button class="primary-btn" onclick="submitRemark()">发表</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /Review Form -->
+                            </div>
+                        </div>
+                        <!-- /tab3  -->
+                    </div>
+                    <!-- /product tab content  -->
+                </div>
+            </div>
+            <!-- /product tab -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>

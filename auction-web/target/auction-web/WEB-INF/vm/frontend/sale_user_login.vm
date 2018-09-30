@@ -1,0 +1,86 @@
+#set($layout = "frontend/layout/blank.vm")
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="../assets/image/favicon.ico" type="image/x-icon" />
+    <title>卖家中心 登录</title>
+#*layui*#
+    <link rel="stylesheet" href="../assets/libs/layui/css/layui.css">
+    <script src="../assets/libs/layui/layui.js"></script>
+#*bootstrap*#
+    <script src="../assets/libs/bootstrap/js/jquery/2.0.0/jquery.min.js"></script>
+    <link href="../assets/libs/bootstrap/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="../assets/libs/bootstrap/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <link href="../assets/libs/bootstrap/fore/style.css" rel="stylesheet">
+#*frontend.js*#
+    <script src="../assets/js/frontend.js"></script>
+</head>
+<body onload="$(document).keydown(function(event){
+　　　　if(event.keyCode == 13){loginSubmit('SaleUser')}});">
+<div id="loginDiv" style="position: relative">
+    <div>
+        <a href=""><img src="../assets/image/logo.jpg" style="width: 100%"></a>
+    </div>
+
+    <img id="loginBackgroundImg" class="loginBackgroundImg" src="../assets/image/login_back.jpg" style="height: 580px;width: 100%">
+
+    <div id="loginSmallDiv" class="loginSmallDiv">
+        <div class="loginErrorMessageDiv">
+            <div class="alert alert-danger" >
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <span class="errorMessage"></span>
+            </div>
+        </div>
+
+        <div class="login_acount_text">卖家登录</div>
+        <div class="loginInput " >
+        <span class="loginInputIcon ">
+            <span class=" glyphicon glyphicon-user"></span>
+        </span>
+            <input id="name" name="name" placeholder="请输入卖家用户名" type="text">
+        </div>
+
+        <div class="loginInput " >
+        <span class="loginInputIcon ">
+            <span class=" glyphicon glyphicon-lock"></span>
+        </span>
+            <input id="password" name="password" type="password" placeholder="密码" type="text">
+        </div>
+        <span id="text-danger" class="text-danger"></span><br><br>
+
+        <div>
+            <a class="notImplementLink" href="javascript:alert('该功能未实现');">忘记登录密码</a>
+            <a href="/sale_register/userRegister.html" class="pull-right">免费注册</a>
+        </div>
+        <div style="margin-top:20px">
+            <button class="btn btn-block redButton" onclick="loginSubmit('SaleUser')">登录</button>
+        </div>
+    </div>
+    <div align="center">
+        <p>
+            <a href="http://www.taobao.com/about">关于萤火</a>
+            <a href="http://www.taobao.com/about/partners.php">合作伙伴</a>
+            <a href="http://pro.taobao.com">营销中心</a>
+            <a href="mailto:lianzheng@taobao.com" title="lianzheng@taobao.com" target="_self">廉正举报</a>
+            <a href="http://service.taobao.com/support/main/service_route.htm">联系客服</a>
+            <a href="http://open.taobao.com">开放平台</a>
+            <a href="http://www.taobao.com/about/join.php">诚征英才</a>
+            <a href="https://consumerservice.taobao.com/contact-us?spm=a21bo.50862.1997523009.35.5dcec6f7zikHQ3">联系我们</a>
+            <a href="http://www.taobao.com/sitemap.php">网站地图</a>
+            <a href="http://terms.alicdn.com/legal-agreement/terms/suit_bu1_taobao/suit_bu1_taobao201703241622_61002.html">法律声明及隐私权政策</a>
+            <em>© 2018 Taobao.com 版权所有</em>
+        </p>
+        <p>
+            <span>网络文化经营许可证：浙网文[2016]0132-032号</span>
+            <b>|</b>
+            <span>增值电信业务经营许可证：浙B2-20080224-1</span>
+            <b>|</b>
+            <span>信息网络传播视听节目许可证：1109364号</span>
+        </p>
+    </div>
+</body>
+</html>
+
